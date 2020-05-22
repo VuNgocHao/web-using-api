@@ -262,8 +262,11 @@
                     </form>
                 </div>
                 <div class="social-section col-md-4">
-                    <span class="social-section-title hidden-md">
+                    <!-- <span class="social-section-title hidden-md">
                         KẾT NỐI VỚI CHÚNG TÔI
+                    </span> -->
+                    <span class="social-section-title hidden-md">
+                        <a href="login.php">Đăng nhập</a>
                     </span>
                     <div class="social-links">
                         <ul>
