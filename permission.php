@@ -1,7 +1,8 @@
 <?php
 if (isset($_SESSION['username']) == false) {
 	// Nếu người dùng chưa đăng nhập thì chuyển hướng website sang trang đăng nhập
-	header('Location: http://localhost:8080/dynamic_web_usingapi/login.php');
+	$login_url = 'http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . 'index.php';
+	header('Location:'.$login_url);
 }else {
 	if (isset($_SESSION['username']) == true) {
 		

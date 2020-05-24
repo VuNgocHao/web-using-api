@@ -2,7 +2,7 @@
 
 $api_url = "https://web-api-test1.herokuapp.com/users";
 
-$login_path = './../login.php';
+$login_path = './../index.php';
 $users_view = "./../users_view.php";
 $login_url = 'http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . $login_path;
 

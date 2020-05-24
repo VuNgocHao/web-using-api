@@ -40,11 +40,11 @@
       
       </div>
   <!-- edit Modal -->
+  <form method="post" id="update_user_frm">
   <div class="modal fade" id="editUserModal" role="dialog">
     <div class="modal-dialog">
       <!-- Modal content-->
       <div class="modal-content">
-      <form method="post" id="update_user_frm">
         <div class="modal-header">
           <h4 class="modal-title">Chỉnh sửa tài khoản</h4>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -68,13 +68,12 @@
         </div>
         <div class="modal-footer">
           <input type="hidden" value="update_user" name="action">
-          <input type="hidden" value="" name="id" id="edit_id">
-          <button type="submit" class="btn btn-success">Lưu thay đổi</button>
+          <input type="hidden" value="1" name="id" id="edit_id">
+          <button type="submit" class="btn btn-success" >Lưu thay đổi</button>
           <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
         </div>
-        </form>
       </div>
-      
+      </form>
     </div>
   </div> <!--add modal-->
   <!-- Modal -->
@@ -116,6 +115,28 @@
     </div>
   </div>    
   </form><!--edit modal-->
+  <!-- delete Modal -->
+  <div class="modal fade" id="deleteUserModal" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+      
+        <div class="modal-header">
+          <h4 class="modal-title">Xóa tài khoản</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p>Bạn có chắc muốn xóa?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" id="delete_user_btn">Xóa</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>    
+<!--delete modal-->
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
@@ -140,8 +161,8 @@
                       success:function(data)
                       {
                           fetch_data_users();
-                          // $('#insert_user_frm').reset();
-                          //$('#createUserModal').modal('hide');
+                          $('#insert_user_frm')[0].reset();
+                          // $('#createUserModal').modal('hide');
                           alert("Đã thêm mới user!");
                       }
               });
@@ -152,28 +173,49 @@
             var name = button.data('name') 
             var username = button.data('username')
             var modal = $(this)
-            modal.find('.modal-body #edit_id').val(id);
+            modal.find('.modal-footer #edit_id').val(id);
             modal.find('.modal-body #edit_name').val(name);
             modal.find('.modal-body #edit_username').val(username);
-          });
+        });
+
           $('#update_user_frm').on('submit', function(event){
               event.preventDefault();
               var form_data = $('#update_user_frm').serialize();
               var button = $(event.relatedTarget) 
-              var id = $('#edit_id').val();
+              var id = $("#edit_id").val();
               $.ajax({
                       url:"fetch.php",
                       method:"POST",
-                      data:{id:id,form_data},
+                      //data:{id:id,form_data,action:"update_user"},
+                      data:form_data,
                       success:function(data)
                       {
                           fetch_data_users();
-                          // $('#insert_user_frm').reset();
-                          //$('#createUserModal').modal('hide');
                           alert("Đã cập nhật user!");
+                          //$('#update_user_frm')[0].reset();
                       }
               });
           });
     })
+    $('#deleteUserModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget)
+            var id = button.data('id')
+            $('#delete_user_btn').click(function(){
+              
+              var action = 'delete_user';
+              $.ajax({
+                  url:"fetch.php",
+                  method:"POST",
+                  data:{id:id, action:action},
+                  success:function(data)
+                  {
+                      fetch_data_users();
+                      alert("Đã xóa user!");
+                      //$('#deleteUserModal').modal('hide');
+                  }
+              });
+            });
+            
+        })
     
 </script>

@@ -10,7 +10,6 @@ function fetch_data_users(){
     })
 }
 function handle_insert_frm(){
-        alert('huuhu');
         var form_data = $('#insert_user_frm').serialize();
         $.ajax({
                 url:"fetch.php",
@@ -25,20 +24,22 @@ function handle_insert_frm(){
                 }
         });
 }
-function deleteUserById(){
-    var id = $('.delete').attr("data-id");
-    var action = 'delete_user';
-    if(confirm("Bạn chắc chắn muốn xóa?"))
-    {
-        $.ajax({
-            url:"fetch.php",
-            method:"POST",
-            data:{id:id, action:action},
-            success:function(data)
-            {
-                fetch_data_users();
-                alert("Đã xóa user!");
-            }
-        });
-    }
-}
+// function deleteUserById(){
+//     var button = $(event.relatedTarget) 
+//     var id = button.data('id')
+//     //var id = $('.delete').attr("data-id");
+//     var action = 'delete_user';
+//     if(confirm("Bạn chắc chắn muốn xóa?"))
+//     {
+//         $.ajax({
+//             url:"fetch.php",
+//             method:"POST",
+//             data:{id:id, action:action},
+//             success:function(data)
+//             {
+//                 fetch_data_users();
+//                 alert("Đã xóa user!");
+//             }
+//         });
+//     }
+// }

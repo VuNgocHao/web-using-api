@@ -43,8 +43,7 @@
                     "username"=>$username,
                     "name"=>$name
                 );
-            }
-            
+            }   
             $json = json_encode($data);
             updateUser($id,$json);
         break;
@@ -85,7 +84,7 @@
                         <td>'.$user->name.'</td>
                         <td>
                             <button type="button" name="edit" class="btn btn-warning btn-xs edit" data-id="'.$user->id.'" data-username="'.$user->username.'" data-name="'.$user->name.'" data-toggle="modal" data-target="#editUserModal">Edit</button>
-                            <button type="button" name="delete" class="btn btn-danger btn-xs delete" data-id="'.$user->id.'" onclick="deleteUserById();">Delete</button>
+                            <button type="button" name="delete" class="btn btn-danger btn-xs delete" data-id="'.$user->id.'" data-toggle="modal" data-target="#deleteUserModal">Delete</button>
                         </td>';
                 $html .= '</tr>';
             }
@@ -136,21 +135,22 @@
         //echo $response;
     }
     function updateUser($id,$json=''){
-        $api_url = $GLOBALS['api_url'].'/'.$id;
+        $api_url = $GLOBALS['api_url'].'/'.$id; 
         
         $curl = curl_init();
 
         curl_setopt($curl,CURLOPT_URL,$api_url);
         
-        curl_setopt($curl,CURL_CUSTOMREQUEST,"PUT");
-        
-        curl_setopt($curl, CURLOPT_POSTFIELDS, $json);
-        
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        
+
+        curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
+
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $json);
+
         curl_setopt($curl, CURLOPT_HTTPHEADER, array(
             'Content-Type: application/json',
          ));
+        //curl_setopt($curl, CURLOPT_POSTFIELDS,http_build_query($data));
         
          $result = curl_exec($curl);
         
