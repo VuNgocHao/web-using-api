@@ -65,6 +65,19 @@
 
         $html = '';
         if (is_array($result) || is_object($result)){
+            //phan trang
+            $total_record = count($result);
+            $current_page = isset($_GET['page']) ? $_GET['page'] : 1;
+            $limit = 5;
+            $total_page = ceil($total_record/$limit);
+            if ($current_page > $total_page){
+                $current_page = $total_page;
+            }else if ($current_page < 1){
+                $current_page = 1;
+            }
+            //find start row next
+            $start = ($current_page - 1)* $limit;
+            
             foreach($result as $user){
                 $html .= '<tr>';
                 $html .='<td>'.$user->id.'</td>
@@ -76,6 +89,20 @@
                         </td>';
                 $html .= '</tr>';
             }
+            if ($current_page > 1 && $total_page > 1){
+                $html .= '<a href="users_view.php?page='.($current_page-1).'">Prev</a> | ';
+            }
+            for ($i = 1;$i <= $total_page; $i++){
+                if ($i==$current_page){
+                    $html .='<span>'.$i.'</span> |';
+                } else {
+                    $html .='<a href="users_view.php?page='.$i.'">'.$i.'</a> | ';
+                }
+            }
+            if ($current_page < $total_page && $total_page >1){
+                $html .= '<a href="index.php?page='.($current_page+1).'">Next</a> | ';
+            }
+
         } else {
             $html .="Refresh lại website,nếu k được vui lòng restart api hoặc fix code";
         }
