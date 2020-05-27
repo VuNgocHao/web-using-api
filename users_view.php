@@ -52,12 +52,12 @@
         <div class="modal-body">
           <div class="form-group">
             <label for="edit_username">Username</label>
-            <input type="text" class="form-control" name="edit_username" id="edit_username" aria-describedby="username" placeholder="Nhập username" value=" " require>
+            <input type="text" class="form-control" name="edit_username" id="edit_username" aria-describedby="username" placeholder="Nhập username" value=" " oninvalid="alert('Chưa nhập username!')" required="required">
           </div>
 
           <div class="form-group">
             <label for="edit_name">Name</label>
-            <input type="text" class="form-control" name="edit_name" id="edit_name" aria-describedby="name" placeholder="Nhập tên" value=" " require>
+            <input type="text" class="form-control" name="edit_name" id="edit_name" aria-describedby="name" placeholder="Nhập tên" value=" " oninvalid="alert('Chưa nhập tên!')" required="required">
           </div>
 
           <div class="form-group">
@@ -91,17 +91,17 @@
 
           <div class="form-group">
             <label for="create_username">Username</label>
-            <input type="text" class="form-control" name="create_username" id="create_username" aria-describedby="username" placeholder="Nhập username" require>
+            <input type="text" class="form-control" name="create_username" id="create_username" aria-describedby="username" placeholder="Nhập username" oninvalid="alert('Chưa nhập username!')" required="required">
           </div>
 
           <div class="form-group">
             <label for="create_name">Name</label>
-            <input type="text" class="form-control" name="create_name" id="create_name" aria-describedby="name" placeholder="Nhập tên" require>
+            <input type="text" class="form-control" name="create_name" id="create_name" aria-describedby="name" placeholder="Nhập tên" oninvalid="alert('Chưa nhập tên!')" required="required">
           </div>
 
           <div class="form-group">
             <label for="exampleInputPassword1">Password</label>
-            <input type="password" class="form-control" name= "create_password" id="create_password" placeholder="Nhập mật khẩu" require>
+            <input type="password" class="form-control" name= "create_password" id="create_password" placeholder="Nhập mật khẩu" oninvalid="alert('Chưa nhập mật khẩu!')" required="required">
           </div>
 
         </div>
@@ -200,13 +200,14 @@
     $('#deleteUserModal').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget)
             var id = button.data('id')
+            var username = button.data('username')
             $('#delete_user_btn').click(function(){
               
               var action = 'delete_user';
               $.ajax({
                   url:"fetch.php",
                   method:"POST",
-                  data:{id:id, action:action},
+                  data:{id:id, action:action,username:username},
                   success:function(data)
                   {
                       fetch_data_users();

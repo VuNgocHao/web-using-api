@@ -52,8 +52,7 @@ switch ($action){
     }
     if ($flag=="true"){
         session_start();
-        $_SESSION['username'] = $username;
-
+        $_SESSION['username'] = $username; 
         header('Location: ' . $GLOBALS['home_url']);
     } else {
         echo "Đăng nhập ko thành công.<a href='".$GLOBALS['login_url']."'>Quay lại </a>";

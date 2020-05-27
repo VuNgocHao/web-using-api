@@ -25,18 +25,19 @@
         break;
         case "delete_user":
             $id = $_POST['id'];
-            deleteUser($id);
+            $username = $_POST['username'];
+            deleteUser($id,$username);
         break;
         case "update_user":
             $id = $_POST['id'];
             $username = $_POST['edit_username'];
             $name = $_POST['edit_name'];
             $password = $_POST['edit_password'];
-            if ($password!=''&&!is_empty($password)){
+            if ($password!=''){
                 $data = array(
                     "username"=>$username,
                     "name"=>$name,
-                    "password"=>$password
+                    "password"=>md5($password)
                 );
             } else {
                 $data = array(
@@ -84,7 +85,7 @@
                         <td>'.$user->name.'</td>
                         <td>
                             <button type="button" name="edit" class="btn btn-warning btn-xs edit" data-id="'.$user->id.'" data-username="'.$user->username.'" data-name="'.$user->name.'" data-toggle="modal" data-target="#editUserModal">Edit</button>
-                            <button type="button" name="delete" class="btn btn-danger btn-xs delete" data-id="'.$user->id.'" data-toggle="modal" data-target="#deleteUserModal">Delete</button>
+                            <button type="button" name="delete" class="btn btn-danger btn-xs delete" data-id="'.$user->id.'" data-username="'.$user->username.'" data-toggle="modal" data-target="#deleteUserModal">Delete</button>
                         </td>';
                 $html .= '</tr>';
             }
@@ -160,7 +161,7 @@
 
         //echo $response;
     }
-    function deleteUser($id,$json=''){
+    function deleteUser($id,$json='',$username=''){
         
         $api_url = $GLOBALS['api_url'].'/'.$id; 
         
@@ -177,8 +178,13 @@
         $result = curl_exec($curl);
         
         $response = json_decode($result);
-
+              
         curl_close($curl);
+
+        if ($response->message=="Delete user success!" && $username==$_SESSION['username']){
+            session_destroy();
+            header('Location: ' . $GLOBALS['login_url']);
+        }
     
         //echo $response;
     }
