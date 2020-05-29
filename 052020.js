@@ -1,8 +1,10 @@
 function fetch_data_users(){
+    var url_string = window.location.href;
+    var page = url_string.substring(url_string.lastIndexOf("?") + 1).split("&")[0];
     $.ajax({
         url:"fetch.php",
         method:"POST",
-        data:{action:'fetch_all_users'},
+        data:{action:'fetch_all_users',page:page},
         success:function(data)
         {
             $('tbody').html(data);

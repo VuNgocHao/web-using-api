@@ -1,6 +1,6 @@
 <?php
 
-$api_url = "https://web-api-test1.herokuapp.com/users";
+$api_url = "https://web-api-test1.herokuapp.com/users/all";
 
 $login_path = './../index.php';
 $users_view = "./../users_view.php";

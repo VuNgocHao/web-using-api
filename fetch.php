@@ -4,7 +4,6 @@
     $api_url = "https://web-api-test1.herokuapp.com/users";
     $action = $_POST['action'];
     $method = $_SERVER['REQUEST_METHOD'];
-
     //$result = CallAPI($method,$url);
     switch ($action)
     {
@@ -50,12 +49,12 @@
         break;
     }
     function fetchAllUsers(){
-
+        $page = $_POST['page'];
         $curl = curl_init();
-        
+        $api_url = $GLOBALS['api_url'].'?'.$page;
         curl_setopt($curl, CURLOPT_HTTPGET, 1);
 
-        curl_setopt($curl, CURLOPT_URL, $GLOBALS['api_url']);        
+        curl_setopt($curl, CURLOPT_URL, $api_url);        
         
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         
@@ -65,20 +64,9 @@
 
         $html = '';
         if (is_array($result) || is_object($result)){
-            //phan trang
-            $total_record = count($result);
-            $current_page = isset($_GET['page']) ? $_GET['page'] : 1;
-            $limit = 5;
-            $total_page = ceil($total_record/$limit);
-            if ($current_page > $total_page){
-                $current_page = $total_page;
-            }else if ($current_page < 1){
-                $current_page = 1;
-            }
-            //find start row next
-            $start = ($current_page - 1)* $limit;
-            
-            foreach($result as $user){
+            $list_user = $result->result;
+            $pagination = $result->pagination;
+            foreach($list_user as $user){
                 $html .= '<tr>';
                 $html .='<td>'.$user->id.'</td>
                         <td>'.$user->username.'</td>
@@ -89,24 +77,20 @@
                         </td>';
                 $html .= '</tr>';
             }
-            if ($current_page > 1 && $total_page > 1){
-                $html .= '<a href="users_view.php?page='.($current_page-1).'">Prev</a> | ';
-            }
-            for ($i = 1;$i <= $total_page; $i++){
-                if ($i==$current_page){
-                    $html .='<span>'.$i.'</span> |';
+            //phan trang
+            $html .= '<tr colspan="4"><td></td><td></td><td><div class="pagination">';
+            for ($i = 0;$i<$pagination->totalPage;$i++){
+                if ($i == $pagination->current) {
+                    $html .= '<a class="active" href="users_view.php?page='.$i.'">'.$i;
                 } else {
-                    $html .='<a href="users_view.php?page='.$i.'">'.$i.'</a> | ';
+                    $html .= '<a href="users_view.php?page='.$i.'">'.$i;
                 }
             }
-            if ($current_page < $total_page && $total_page >1){
-                $html .= '<a href="index.php?page='.($current_page+1).'">Next</a> | ';
-            }
+            $html .='</div></td></tr>';
 
         } else {
             $html .="Refresh lại website,nếu k được vui lòng restart api hoặc fix code";
         }
-        
         echo $html;
     }
     function createNewUser($json=''){
