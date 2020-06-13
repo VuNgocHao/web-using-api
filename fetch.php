@@ -80,10 +80,11 @@
             //phan trang
             $html .= '<tr colspan="4"><td></td><td></td><td><div class="pagination">';
             for ($i = 0;$i<$pagination->totalPage;$i++){
+                $j = $i + 1;
                 if ($i == $pagination->current) {
-                    $html .= '<a class="active" href="users_view.php?page='.$i.'">'.$i;
+                    $html .= '<a class="active" href="users_view.php?page='.$i.'">'.$j;
                 } else {
-                    $html .= '<a href="users_view.php?page='.$i.'">'.$i;
+                    $html .= '<a href="users_view.php?page='.$i.'">'.$j;
                 }
             }
             $html .='</div></td></tr>';

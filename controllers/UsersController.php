@@ -16,6 +16,47 @@ if (isset($_POST['action'])){
 }
 
 switch ($action){
+case "register":
+    $name = $_POST['name'];
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+    $data = array(
+        "username"=>$username,
+        "name"=>$name,
+        "password"=>md5($password)
+    );
+    $json = json_encode($data);
+    $curl = curl_init();
+    $url = 'https://web-api-test1.herokuapp.com/users';
+    curl_setopt($curl,CURLOPT_URL,$url);
+        
+    curl_setopt($curl, CURLOPT_POST, 1);
+        
+    curl_setopt($curl, CURLOPT_POSTFIELDS, $json);
+        
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        
+    curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+        'Content-Type: application/json',
+    ));
+        
+    $result = curl_exec($curl);
+    if (!$result){
+        echo "Đăng kí thất bại, thử lại";
+        exit;
+    }
+    $response = json_decode($result);
+        
+    curl_close($curl);
+    if ($response->message=="Insert new user success!"){
+        session_start();
+        $_SESSION['username'] = $username; 
+        header('Location: ' . $GLOBALS['home_url']);
+    } else {
+        echo "Đăng kí ko thành công.<a href='".$GLOBALS['login_url']."'>Quay lại </a>";
+    }
+
+    break;
  case "logout":
     session_start();
     session_destroy();

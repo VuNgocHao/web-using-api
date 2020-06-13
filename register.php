@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Đăng nhập</title>
+	<title>Đăng kí</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
@@ -34,35 +34,47 @@
 			<div class="wrap-login100 p-t-85 p-b-20">
 				<form class="login100-form validate-form" method="post" action="./controllers/UsersController.php">
 					<span class="login100-form-title p-b-70">
-						Welcome
+						Đăng kí
 					</span>
 					<span class="login100-form-avatar">
 						<img src="https://img.icons8.com/doodle/96/000000/user.png"/>
 					</span>
 
-					<div class="wrap-input100 validate-input m-t-85 m-b-35" data-validate = "Nhập username">
+					<div class="wrap-input100 validate-input m-t-85 m-b-35" data-validate = "Nhập tên">
+						<input class="input100" type="text" name="name" id="name_txt" require='required'>
+						<span class="focus-input100" data-placeholder="Tên"></span>
+					</div>
+
+                    <div class="wrap-input100 validate-input m-b-50" data-validate = "Nhập username">
 						<input class="input100" type="text" name="username" id="username_txt">
 						<span class="focus-input100" data-placeholder="Username"></span>
 					</div>
 
 					<div class="wrap-input100 validate-input m-b-50" data-validate="Nhập mật khẩu">
 						<input class="input100" type="password" name="password" id="password_txt">
-						<span class="focus-input100" data-placeholder="Password"></span>
+						<span class="focus-input100" data-placeholder="Mật khẩu"></span>
 					</div>
-						<input type="hidden" name="action" value="login">
+
+                    <div class="wrap-input100 validate-input m-b-50" data-validate="Xác nhận mật khẩu">
+						<input class="input100" type="password" name="re-password" id="repassword_txt">
+						<span class="focus-input100" data-placeholder="Xác nhận mật khẩu"></span>
+					</div>
+
+						<input type="hidden" name="action" value="register">
+
 					<div class="container-login100-form-btn">
 						<button class="login100-form-btn" type="submit" name="submit_btn">
-							Login
+							Đăng kí
 						</button>
 					</div>
-
-					<div>
+                    <br>
+                    <div>
 						<span class="txt1">
-								Chưa có tài khoản?
+								Đã có tài khoản?
 						</span>
 
-						<a href="register.php" class="txt2"><button class="login100-form-btn" type="button" name="register_btn">
-								Đăng kí
+						<a href="index.php" class="txt2"><button class="login100-form-btn" type="button" name="register_btn">
+								Đăng nhập
 						</button></a>
 					</div>
 
@@ -79,16 +91,15 @@
 
 						<!-- <li>
 							<span class="txt1">
-								Chưa có tài khoản?
+								Don’t have an account?
 							</span>
 
 							<a href="#" class="txt2">
-								Đăng kí
+								Sign up
 							</a>
 						</li> -->
 					</ul>
 				</form>
-				
 			</div>
 		</div>
 	</div>
