@@ -99,8 +99,8 @@ case "register":
         echo "Đăng nhập ko thành công.<a href='".$GLOBALS['login_url']."'>Quay lại </a>";
     }
     break;
- default:
-    echo "K có quyền truy nhập";
-    break;
+//  default:
+//     echo "K có quyền truy nhập";
+//     break;
 }
 ?>
