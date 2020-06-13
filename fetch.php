@@ -17,7 +17,7 @@
             $data = array(
                 "username"=>$username,
                 "name"=>$name,
-                "password"=>md5($password)
+                "password"=>$password
             );
             $json = json_encode($data);
             createNewUser($json);
@@ -36,7 +36,7 @@
                 $data = array(
                     "username"=>$username,
                     "name"=>$name,
-                    "password"=>md5($password)
+                    "password"=>$password
                 );
             } else {
                 $data = array(
