@@ -36,7 +36,7 @@
                 $data = array(
                     "username"=>$username,
                     "name"=>$name,
-                    "password"=>$password
+                    "password"=>md5($password)
                 );
             } else {
                 $data = array(
